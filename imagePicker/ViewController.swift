@@ -197,9 +197,8 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func cancelBtn(sender: UIBarButtonItem) {
-        let vc = storyboard!.instantiateViewControllerWithIdentifier("ViewController") as! ViewController
+        let vc = storyboard!.instantiateViewControllerWithIdentifier("SentMemesTableViewController") as! SentMemesTableViewController
         self.presentViewController(vc, animated: true, completion:nil)
-        
         
     }
     

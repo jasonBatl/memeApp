@@ -32,24 +32,11 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
         appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = appDelegate.memes
         
-        if memes.count > 0 {
-            
-            super.viewDidAppear(true)
-            println("You have \(memes.count) >0 SentMemes")
-        
-        } else if self.memes.count == 0 {
-            let storyboard = self.storyboard
-            let vc = storyboard!.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
-            self.presentViewController(vc, animated:true, completion:nil)
-        }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-
-        //Add an edit button
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = appDelegate.memes
@@ -57,14 +44,12 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+       
     }
 
-    // MARK: - Table view data source
 
    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
+    
         return memes.count
     }
 

@@ -62,6 +62,7 @@
                                     <barButtonItem systemItem="cancel" id="MNn-Vi-IJl">
                                         <connections>
                                             <action selector="cancelBtn:" destination="vXZ-lx-hvc" id="fk3-Zd-L1M"/>
+                                            <segue destination="rMl-ZF-xZj" kind="show" id="vR1-6h-4HK"/>
                                         </connections>
                                     </barButtonItem>
                                 </items>
@@ -230,7 +231,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="811.5" y="429"/>
+            <point key="canvasLocation" x="819" y="454"/>
         </scene>
         <!--Collections-->
         <scene sceneID="RGC-vv-nNQ">
@@ -249,7 +250,7 @@
             </objects>
             <point key="canvasLocation" x="2377.5" y="792"/>
         </scene>
-        <!--Collection View-->
+        <!--Sent Memes-->
         <scene sceneID="3a3-rD-HrX">
             <objects>
                 <viewController id="bVE-n7-e4Z" customClass="MemeCollectionCollectionViewController" customModule="imagePicker" customModuleProvider="target" sceneMemberID="viewController">
@@ -346,7 +347,7 @@
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item 2" id="q8k-tD-lsx"/>
-                    <navigationItem key="navigationItem" title="Collection View" id="qaC-21-YdJ">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="qaC-21-YdJ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="n8M-rs-xpT">
                             <connections>
                                 <action selector="addButton:" destination="bVE-n7-e4Z" id="TXS-Po-2gJ"/>
@@ -361,7 +362,7 @@
             </objects>
             <point key="canvasLocation" x="3141" y="792"/>
         </scene>
-        <!--Table View-->
+        <!--Sent Memes-->
         <scene sceneID="VYx-aW-8jH">
             <objects>
                 <tableViewController storyboardIdentifier="SentMemesTableViewController" id="wIR-tL-Mjt" customClass="SentMemesTableViewController" customModule="imagePicker" customModuleProvider="target" sceneMemberID="viewController">
@@ -402,7 +403,7 @@
                             <outlet property="delegate" destination="wIR-tL-Mjt" id="LNi-Kl-Yp9"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Table View" id="OO5-da-sie">
+                    <navigationItem key="navigationItem" title="Sent Memes" id="OO5-da-sie">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ji0-kd-mll">
                             <connections>
                                 <action selector="addButton:" destination="wIR-tL-Mjt" id="vca-5D-nMP"/>
