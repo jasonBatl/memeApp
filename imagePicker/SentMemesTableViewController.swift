@@ -25,6 +25,11 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
         let appDelegate = object as! AppDelegate
         memes = appDelegate.memes
         self.tableView.reloadData()
+        
+//        if self.memes.count == 0 {
+//            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
+//            self.presentViewController(vc, animated: true, completion: nil)
+//        }
     }
     
     override func viewDidAppear(animated: Bool) {

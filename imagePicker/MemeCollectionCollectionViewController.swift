@@ -31,10 +31,7 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
         memes = appDelegate.memes
         self.collectionView?.reloadData()
         
-        if self.memes.count == 0 {
-            let vc = self.storyboard?.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
-            self.presentViewController(vc, animated: true, completion: nil)
-        }
+        
     }
     
     override func viewDidLoad() {

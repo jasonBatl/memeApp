@@ -35,16 +35,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     override func viewWillAppear(animated: Bool) {
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
         
-        self.subscribeToKeyboardNotifications()
-        self.subscribeToKeyboardWillHideNotifications()
+        self.subscribeToKeyboard()
         
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        self.unsubscribeFromKeyboardNotifications()
-        self.unsubscribeFromKeyboardWillHideNotifications()
+        self.unsubscribeFromKeyboard()
+        
     }
 
     @IBAction func pickAnImage(sender: AnyObject) {
@@ -81,8 +80,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
         self.presentViewController(imagePicker, animated: true, completion: nil)
-        
-        
     }
     
       
@@ -94,26 +91,22 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         return true
     }
     
-    func subscribeToKeyboardNotifications() {
+    func subscribeToKeyboard(){
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-    }
-    
-    func subscribeToKeyboardWillHideNotifications() {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
     
-    func unsubscribeFromKeyboardNotifications() {
+    func unsubscribeFromKeyboard() {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-    }
-    
-    func unsubscribeFromKeyboardWillHideNotifications() {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
+    
+    
     
     func keyboardWillShow(notification: NSNotification) {
         
@@ -143,12 +136,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func save(){
         if imagePickerBox.image == nil {
             let alertController = UIAlertController(title:"Opps",
-            message:"You must pic an image before sharing",
+            message:"You must pick an image before sharing",
             preferredStyle:UIAlertControllerStyle.Alert);
             
             alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default,handler:nil))
             
             self.presentViewController(alertController, animated: true, completion: nil)
+            
            
         }else{
             var meme = Meme(top: topText.text!, bottom: bottomText.text!, pic: imagePickerBox.image!, memedImage: generatedMemedImage())
@@ -156,6 +150,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let object = UIApplication.sharedApplication().delegate
             let appDelegate = object as! AppDelegate
             appDelegate.memes.append(meme)
+            self.dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
@@ -189,7 +184,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             activity, completed, items, error in
             if completed {
                 self.save()
-                self.dismissViewControllerAnimated(true, completion: nil)
+                
             }
         }
         
