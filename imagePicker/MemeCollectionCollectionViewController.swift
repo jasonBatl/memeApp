@@ -17,7 +17,7 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
     
     @IBAction func addButton(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
+        let vc = storyboard.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! UIViewController
         self.presentViewController(vc, animated:true, completion:nil)
     }
     

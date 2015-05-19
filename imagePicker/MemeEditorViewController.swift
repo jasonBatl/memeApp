@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MemeEditorViewController.swift
 //  imagePicker
 //
 //  Created by Bronson, Jason on 4/6/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIToolbarDelegate {
+class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UIToolbarDelegate {
 
     @IBOutlet weak var imagePickerBox: UIImageView!
     @IBOutlet weak var cameraButton: UIBarButtonItem!
@@ -34,15 +34,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewWillAppear(animated: Bool) {
         cameraButton.enabled = UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)
-        
-        self.subscribeToKeyboard()
+        //enable keyboard
+        subscribeToKeyboard()
         
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
-        self.unsubscribeFromKeyboard()
+        //dismiss keyboard
+        unsubscribeFromKeyboard()
         
     }
 
@@ -51,15 +51,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
         
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        
+        //Check to see if there is an image to pick
         if let image = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.imagePickerBox.image = image
-            self.dismissViewControllerAnimated(true, completion:nil)
+            imagePickerBox.image = image
+            dismissViewControllerAnimated(true, completion:nil)
         }
         
         if let image = imagePickerBox.image {
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func pickAnImageFromCamera(sender: AnyObject) {
@@ -79,7 +79,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-        self.presentViewController(imagePicker, animated: true, completion: nil)
+        presentViewController(imagePicker, animated: true, completion: nil)
     }
     
       
@@ -94,7 +94,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func subscribeToKeyboard(){
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
     }
     
@@ -102,7 +101,6 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func unsubscribeFromKeyboard() {
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
     }
     
@@ -111,14 +109,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     func keyboardWillShow(notification: NSNotification) {
         
         if bottomText.isFirstResponder() {
-            self.view.frame.origin.y -= getKeyboardHeight(notification)
+            view.frame.origin.y -= getKeyboardHeight(notification)
         }
         
    }
     
     func keyboardWillHide(notification: NSNotification) {
         
-        self.view.frame.origin.y += getKeyboardHeight(notification)
+        view.frame.origin.y += getKeyboardHeight(notification)
         
     }
     
@@ -135,13 +133,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     func save(){
         if imagePickerBox.image == nil {
+            //if user doesn't pick an image and try to submit it. Give them an alert.
             let alertController = UIAlertController(title:"Opps",
             message:"You must pick an image before sharing",
             preferredStyle:UIAlertControllerStyle.Alert);
             
             alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default,handler:nil))
             
-            self.presentViewController(alertController, animated: true, completion: nil)
+            presentViewController(alertController, animated: true, completion: nil)
             
            
         }else{
@@ -150,22 +149,23 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let object = UIApplication.sharedApplication().delegate
             let appDelegate = object as! AppDelegate
             appDelegate.memes.append(meme)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            dismissViewControllerAnimated(true, completion: nil)
         }
     }
     
     func generatedMemedImage() -> UIImage {
-        
-        self.topToolBar.hidden = true
-        self.bottomToolBar.hidden = true
+        // hide the toolbars
+        topToolBar.hidden = true
+        bottomToolBar.hidden = true
         
         UIGraphicsBeginImageContext(self.view.frame.size)
-        self.view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
+        view.drawViewHierarchyInRect(self.view.frame, afterScreenUpdates: true)
         let memedImage : UIImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        self.topToolBar.hidden = false
-        self.bottomToolBar.hidden = false
+        //after the meme is generated show toolbars
+        topToolBar.hidden = false
+        bottomToolBar.hidden = false
         
         return memedImage
     }
@@ -193,7 +193,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     @IBAction func cancelBtn(sender: UIBarButtonItem) {
         let vc = storyboard!.instantiateViewControllerWithIdentifier("SentMemesTableViewController") as! SentMemesTableViewController
-        self.presentViewController(vc, animated: true, completion:nil)
+        presentViewController(vc, animated: true, completion:nil)
         
     }
     

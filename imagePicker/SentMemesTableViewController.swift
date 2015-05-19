@@ -12,8 +12,13 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
 
     @IBAction func addButton(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("ViewController") as! UIViewController
+        let vc = storyboard.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! UIViewController
         self.presentViewController(vc, animated:true, completion:nil)
+    }
+    
+   //Add an edit button
+    @IBAction func editMemeTableBtn(sender: AnyObject) {
+        self.tableView.setEditing(true, animated: true)
     }
     
     var memes: [Meme]!
@@ -37,8 +42,6 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.leftBarButtonItem = self.editButtonItem()
         let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = appDelegate.memes
     }
@@ -50,13 +53,13 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
 
 
    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    
+        // Return the number of rows in the section.
         return memes.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        // Set the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("MemeTableViewCell", forIndexPath: indexPath) as! UITableViewCell
         let memeCell = self.memes[indexPath.row]
 
@@ -76,9 +79,6 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
         
         self.navigationController!.pushViewController(detailController, animated: true)
         
-       
-        
-        self.navigationController?.setToolbarHidden(true, animated: true)
     }
 
 }
