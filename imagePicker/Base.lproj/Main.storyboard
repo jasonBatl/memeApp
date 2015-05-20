@@ -404,11 +404,6 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Sent Memes" id="OO5-da-sie">
-                        <barButtonItem key="leftBarButtonItem" systemItem="edit" id="Fkh-66-Qnj">
-                            <connections>
-                                <action selector="editMemeTableBtn:" destination="wIR-tL-Mjt" id="GIc-IC-WmI"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="ji0-kd-mll">
                             <connections>
                                 <action selector="addButton:" destination="wIR-tL-Mjt" id="vca-5D-nMP"/>

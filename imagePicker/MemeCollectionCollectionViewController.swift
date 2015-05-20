@@ -18,7 +18,7 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
     @IBAction func addButton(sender: UIBarButtonItem) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! UIViewController
-        self.presentViewController(vc, animated:true, completion:nil)
+        presentViewController(vc, animated:true, completion:nil)
     }
     
     
@@ -29,9 +29,13 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         memes = appDelegate.memes
-        self.collectionView?.reloadData()
+        collectionView?.reloadData()
         
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        collectionView?.reloadData()
     }
     
     override func viewDidLoad() {
@@ -44,12 +48,12 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return self.memes.count
+        return memes.count
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionMemeCell", forIndexPath: indexPath) as! memeCollectionViewCell
-        let meme = self.memes[indexPath.item]
+        let meme = memes[indexPath.item]
         
         cell.memeImageView.image = meme.memedImage
         cell.memeImageView.sizeToFit()
@@ -59,8 +63,8 @@ class MemeCollectionCollectionViewController: UICollectionViewController, UIColl
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("memeDetailViewController") as! memeDetailViewController
-        detailController.meme = self.memes[indexPath.item]
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("memeDetailViewController") as! memeDetailViewController
+        detailController.meme = memes[indexPath.item]
 
         self.navigationController!.pushViewController(detailController, animated: true)
     }

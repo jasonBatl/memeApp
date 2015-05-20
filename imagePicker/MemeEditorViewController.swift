@@ -116,7 +116,7 @@ class MemeEditorViewController: UIViewController, UIImagePickerControllerDelegat
     
     func keyboardWillHide(notification: NSNotification) {
         
-        view.frame.origin.y += getKeyboardHeight(notification)
+        view.frame.origin.y = 0
         
     }
     

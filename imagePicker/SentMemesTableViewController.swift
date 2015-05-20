@@ -13,13 +13,10 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
     @IBAction func addButton(sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewControllerWithIdentifier("MemeEditorViewController") as! UIViewController
-        self.presentViewController(vc, animated:true, completion:nil)
+        presentViewController(vc, animated:true, completion:nil)
     }
     
-   //Add an edit button
-    @IBAction func editMemeTableBtn(sender: AnyObject) {
-        self.tableView.setEditing(true, animated: true)
-    }
+   
     
     var memes: [Meme]!
     var appDelegate: AppDelegate!
@@ -29,7 +26,7 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
         let object = UIApplication.sharedApplication().delegate
         let appDelegate = object as! AppDelegate
         memes = appDelegate.memes
-        self.tableView.reloadData()
+        tableView.reloadData()
         
     }
     
@@ -44,6 +41,9 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
         super.viewDidLoad()
         let appDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         memes = appDelegate.memes
+        
+        //add edit button to tableview
+        self.navigationItem.leftBarButtonItem = self.editButtonItem()
     }
 
     override func didReceiveMemoryWarning() {
@@ -61,7 +61,7 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         // Set the cell
         let cell = tableView.dequeueReusableCellWithIdentifier("MemeTableViewCell", forIndexPath: indexPath) as! UITableViewCell
-        let memeCell = self.memes[indexPath.row]
+        let memeCell = memes[indexPath.row]
 
         // Configure the cell...
         cell.imageView?.image = memeCell.memedImage
@@ -73,11 +73,31 @@ class SentMemesTableViewController: UITableViewController, UITableViewDataSource
    
     override func tableView(tableView:UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("memeDetailViewController") as! memeDetailViewController
+        let detailController = storyboard!.instantiateViewControllerWithIdentifier("memeDetailViewController") as! memeDetailViewController
         detailController.meme = self.memes[indexPath.row]
         
         
-        self.navigationController!.pushViewController(detailController, animated: true)
+        navigationController!.pushViewController(detailController, animated: true)
+        
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        switch editingStyle {
+        case .Delete:
+            //delete items from the model
+            memes.removeAtIndex(indexPath.row)
+            appDelegate.memes.removeAtIndex(indexPath.row)
+            
+            //remove the item from the tableview
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+           
+        default:
+            return
+        }
+        
+        //reload data to reflect changes
+        tableView.reloadData()
         
     }
 
